@@ -1,96 +1,96 @@
 (function() {
 
-/**
- * gridsize will set game board in 1:1 ratio (5 is default and minimum)
- * using a for loop in the HTML changes to gridsize will disrupt current Style
- * - New Layouts need to be added for larger gridsizes larger layouts could be generated based on gridsize variable
- * changes to the gridsize will disrupt current pre-built levels
- * @type {Number}
- */
-var gridSize = 5;
+	/**
+	* gridsize will set game board in 1:1 ratio (5 is default and minimum)
+	* using a for loop in the HTML changes to gridsize will disrupt current Style
+	* - New Layouts need to be added for larger gridsizes larger layouts could be generated based on gridsize variable
+	* changes to the gridsize will disrupt current pre-built levels
+	* @type {Number}
+	*/
+	var gridSize = 5;
 
-/**
- * boolean for power state
- * @type {Boolean}
- */
-var powerIsOn = false;
+	/**
+	* boolean for power state
+	* @type {Boolean}
+	*/
+	var powerIsOn = false;
 
-/**
- * boolean for start button state
- * @type {Boolean}
- */
-var gameIsStarted = false;
+	/**
+	* boolean for start button state
+	* @type {Boolean}
+	*/
+	var gameIsStarted = false;
 
-/**
- * did user confirm reset
- * @type {Boolean}
- */
-var resetIsConfirm = false;
+	/**
+	* did user confirm reset
+	* @type {Boolean}
+	*/
+	var resetIsConfirm = false;
 
-/**
- * if reset was called from reset button
- * reset happens from power OFF and STOP as well
- * Reset via reset will reset current level
- * otherwise reset will clear the board with OFF and STOP
- * @type {Boolean}
- */
-var resetButtonClicked = false;
+	/**
+	* if reset was called from reset button
+	* reset happens from power OFF and STOP as well
+	* Reset via reset will reset current level
+	* otherwise reset will clear the board with OFF and STOP
+	* @type {Boolean}
+	*/
+	var resetButtonClicked = false;
 
-/**
- * time counter
- * @type {Number}
- */
-var timer = 0;
+	/**
+	* time counter
+	* @type {Number}
+	*/
+	var timer = 0;
 
-/**
- * tracks number of user clicks for score keeping and the display
- * @type {Number}
- */
-var numClicks = 0;
+	/**
+	* tracks number of user clicks for score keeping and the display
+	* @type {Number}
+	*/
+	var numClicks = 0;
 
-/**
- * how many levels are there?
- * @todo this could be generated from the length of the levels object
- * @type {Number}
- */
-var numLevels = 26;
+	/**
+	* how many levels are there?
+	* @todo this could be generated from the length of the levels object
+	* @type {Number}
+	*/
+	var numLevels = 26;
 
-/**
- * level indicator
- * @type {Number}
- */
-var curLevel=0;
+	/**
+	* level indicator
+	* @type {Number}
+	*/
+	var curLevel=0;
 
-/**
- * display toggle
- * @type {Number}
- */
-var selectORdisplay=0;
+	/**
+	* display toggle
+	* @type {Number}
+	*/
+	var selectORdisplay=0;
 
-/**
- * [levelsBoxstatus description]
- * @type {Number}
- */
-var levelsBoxstatus=0;
+	/**
+	* [levelsBoxstatus description]
+	* @type {Number}
+	*/
+	var levelsBoxstatus=0;
 
-/**
- * [gameData description]
- * @type {Array}
- */
-var gameData = new Array();
+	/**
+	* [gameData description]
+	* @type {Array}
+	*/
+	var gameData = new Array();
 
-/**
- * register soundjs
- * @todo add sounds back to interaction
- */
-// createjs.Sound.registerSound("audio/beep-high.mp3", "beepHigh", true);
-// createjs.Sound.registerSound("audio/beep-low.mp3", "beepLow", true);
-// createjs.Sound.registerSound("audio/beep-doubleHigh.mp3", "beepdoubleHigh", true);
-// createjs.Sound.registerSound("audio/beep-doubleHigh2.mp3", "beepdoubleHigh2", true);
-// createjs.Sound.registerSound("audio/beep-doubleLow.mp3", "beepdoubleLow", true);
-// createjs.Sound.registerSound("audio/beep-error.mp3", "beepError", true);
-// createjs.Sound.registerSound("audio/slide.mp3", "slide", true);
-// createjs.Sound.registerSound("audio/swoop.mp3", "swoop", true);
+	/**
+	* register soundjs
+	* @todo add sounds back to interaction
+	*/
+	// createjs.Sound.registerSound("audio/beep-high.mp3", "beepHigh", true);
+	// createjs.Sound.registerSound("audio/beep-low.mp3", "beepLow", true);
+	// createjs.Sound.registerSound("audio/beep-doubleHigh.mp3", "beepdoubleHigh", true);
+	// createjs.Sound.registerSound("audio/beep-doubleHigh2.mp3", "beepdoubleHigh2", true);
+	// createjs.Sound.registerSound("audio/beep-doubleLow.mp3", "beepdoubleLow", true);
+	// createjs.Sound.registerSound("audio/beep-error.mp3", "beepError", true);
+	// createjs.Sound.registerSound("audio/slide.mp3", "slide", true);
+	// createjs.Sound.registerSound("audio/swoop.mp3", "swoop", true);
 
 	$(document).ready(function(){
 		fitui();
@@ -101,11 +101,11 @@ var gameData = new Array();
 	});//end window resize
 
 	/**
-	 * fit elements to available screen relestate
-	 * @method fitui
-	 * @return {[type]} [description]
-	 * @todo cache common elements, explore native flow where applicable
-	 */
+	* fit elements to available screen relestate
+	* @method fitui
+	* @return {[type]} [description]
+	* @todo cache common elements, explore native flow where applicable
+	*/
 	function fitui(){//fit UI to screen size
 		winwidth = $(window).width();//get window width
 		winheight = $(window).height();//get window height
@@ -134,10 +134,10 @@ var gameData = new Array();
 	}
 
 	/**
-	 * toggle game power
-	 * @method powerToggle
-	 * @return {[type]}    [description]
-	 */
+	* toggle game power
+	* @method powerToggle
+	* @return {[type]}    [description]
+	*/
 	function powerToggle(){
 		console.log("power toggle");
 		if(!powerIsOn){//if POWER is OFF, switch to ON by running these...
@@ -148,28 +148,25 @@ var gameData = new Array();
 		}else if(powerIsOn){ //if POWER is already ON, switch OFF by running these...
 			// createjs.Sound.play('beepdoubleLow');//sound OFF
 			$('#power .Ybutton').css('background-color',"#FFEA00");//set POWER button to YELLO(OFF)
-			//=====if POWER is switched OFF during game ask first=====//
-			if($('.iLight').length >= 1){//if there are any lights ON, do this...
+			if($('.iLight').length >= 1){ //if there are any lights ON, do this...
 				getResetConfirm(); // run getResetConfirm
-				if(resetIsConfirm){ // if player confirm is true
-					//Play restart sound
-					if(gameIsStarted){//if START then STOP
+				if(resetIsConfirm){ // if reset confirm is true
+					//TODO play restart sound
+					if(gameIsStarted){ //if START then STOP
 						$('#start p').html('Start');//set STOP to START
 						$('#start .Ybutton').css('background-color',"#FFEA00");//change Start button to YELLOW
 						$('.iLight').removeClass('iLight').addClass('oLight');//turn all lights off(set all lights to oLight)
-
 						gameIsStarted = false;
 					}
 					if(1==selectORdisplay){//if display is up
 						movetoSelect();//move the select button into place
 					}
-					resetIsConfirm = false;//set resetIsConfirm back to 0, for next time this runs
+					resetIsConfirm = false; //set resetIsConfirm back to 0, for next time this runs
 					powerIsOn = false; // set POWER OFF
-					curLevel=0;//reset curLevel
+					curLevel=0; //reset curLevel
 				}
-			}else{//if there are NO lights ON
+			} else { //if there are NO lights ON
 				powerIsOn = false; // set POWER OFF
-
 				gameIsStarted = false;
 				curLevel=0;//reset curLevel
 				if(1==selectORdisplay){//if display is up
@@ -183,14 +180,14 @@ var gameData = new Array();
 	tapped=0;
 
 	/**
-	 * toggle start button
-	 * @method startStop
-	 * @return {[type]}  [description]
-	 */
+	* toggle start button
+	* @method startStop
+	* @return {[type]}  [description]
+	*/
 	function startStop(){
 		if(!powerIsOn){ powerToggle(); } // autoOn if the power is OFF then toggle power ON
 		if(powerIsOn){ // when the Power is ON...
-		resetIsConfirm = false;
+			resetIsConfirm = false;
 			// createjs.Sound.play('beepdoubleHigh');//play sound
 			if (!gameIsStarted){ //if stop, set START
 				gameIsStarted = true;
@@ -236,15 +233,15 @@ var gameData = new Array();
 		var row=Number(obj.id.substr(4,1));//get row = make it a number(get OBJ ID, skip the first 4 characters, use the next 1 characters)*id=cell(X)x*
 		var col=Number(obj.id.substr(5,1));//get col = make it a number(get OBJ ID, skip the first 5 characters, use the next 1 characters)*id=cellx(X)*
 		//toggle the light of the clicked cell (OBJ)
-	    $('#cell' + row + col).attr('class',($('#cell' + row + col).attr('class') == 'oLight') ? 'iLight' : 'oLight');
-	    //toggle adjacent cells
-	    $('#cell' + (row-1) + col).attr('class',($('#cell' + (row-1) + col).attr('class') == 'oLight') ? 'iLight' : 'oLight');//toggle the light of the cell above the clicked cell (OBJ.id row-1 col)
-	    $('#cell' + (row+1) + col).attr('class',($('#cell' + (row+1) + col).attr('class') == 'oLight') ? 'iLight' : 'oLight');//toggle the light of the cell below the clicked cell (OBJ.id row+1 col)
-	    $('#cell' + row + (col+1)).attr('class',($('#cell' + row + (col+1)).attr('class') == 'oLight') ? 'iLight' : 'oLight');//toggle the light of the cell to the right of the clicked cell (OBJ.id row col+1)
-	    $('#cell' + row + (col-1)).attr('class',($('#cell' + row + (col-1)).attr('class') == 'oLight') ? 'iLight' : 'oLight');//toggle the light of the cell to the left of the clicked cell (OBJ.id row col-1)
+		$('#cell' + row + col).attr('class',($('#cell' + row + col).attr('class') == 'oLight') ? 'iLight' : 'oLight');
+		//toggle adjacent cells
+		$('#cell' + (row-1) + col).attr('class',($('#cell' + (row-1) + col).attr('class') == 'oLight') ? 'iLight' : 'oLight');//toggle the light of the cell above the clicked cell (OBJ.id row-1 col)
+		$('#cell' + (row+1) + col).attr('class',($('#cell' + (row+1) + col).attr('class') == 'oLight') ? 'iLight' : 'oLight');//toggle the light of the cell below the clicked cell (OBJ.id row+1 col)
+		$('#cell' + row + (col+1)).attr('class',($('#cell' + row + (col+1)).attr('class') == 'oLight') ? 'iLight' : 'oLight');//toggle the light of the cell to the right of the clicked cell (OBJ.id row col+1)
+		$('#cell' + row + (col-1)).attr('class',($('#cell' + row + (col-1)).attr('class') == 'oLight') ? 'iLight' : 'oLight');//toggle the light of the cell to the left of the clicked cell (OBJ.id row col-1)
 		//checkWin - if the game is START and all lights are OFF - Player Wins Level
 		if(gameIsStarted){//if the game is START
-		    if($('.iLight').length >= 1){//AND if 1 or more lights are on - no win yet
+			if($('.iLight').length >= 1){//AND if 1 or more lights are on - no win yet
 				//no win, lights still on
 			}else{ //AND if 0 lights are ON then Player Wins level
 				winLevel();//run WIN LEVEL function
@@ -256,7 +253,7 @@ var gameData = new Array();
 	function winLevel(){//if win then play next (pre-made,ease,med,hard,xxx)
 		// createjs.Sound.play('beepdoubleHigh');//winning sound
 		//run loop animation of lights
-			$('.iLight').removeClass('iLight').addClass('oLight');//turn all lights off
+		$('.iLight').removeClass('iLight').addClass('oLight');//turn all lights off
 		setTimeout(function(){
 			$('.oLight').removeClass('oLight').addClass('iLight');//turn all lights ON
 		},90);
@@ -281,11 +278,11 @@ var gameData = new Array();
 	}
 
 	/**
-	 * reset function
-	 * if the game is already reset, make the reset button call new function
-	 * the new function will bring the select button back on screen
-	 * @method resetButton
-	 */
+	* reset function
+	* if the game is already reset, make the reset button call new function
+	* the new function will bring the select button back on screen
+	* @method resetButton
+	*/
 	function resetButton(){
 		if(powerIsOn){
 			if(gameIsStarted){
@@ -323,12 +320,12 @@ var gameData = new Array();
 	//RESET GAME - make sure the user wants to clear thier current progress
 	function getResetConfirm(){
 		//if(gameIsStarted){
-			var sure=confirm('Are you sure? This will clear your Progress!');
-			if(true==sure){
-				resetIsConfirm = true;
-			}else{
-				resetIsConfirm = false;
-			}
+		var sure=confirm('Are you sure? This will clear your Progress!');
+		if(true==sure){
+			resetIsConfirm = true;
+		}else{
+			resetIsConfirm = false;
+		}
 		//} else if(!gameIsStarted){
 
 		//}
@@ -378,10 +375,10 @@ var gameData = new Array();
 	}
 
 	/**
-	 * show display screen
-	 * @method movetoDisplay
-	 * @return {[type]}      [description]
-	 */
+	* show display screen
+	* @method movetoDisplay
+	* @return {[type]}      [description]
+	*/
 	function movetoDisplay(){
 		// createjs.Sound.play('slide');
 		$('#display').css('display','block');
@@ -400,10 +397,10 @@ var gameData = new Array();
 	}
 
 	/**
-	 * timer
-	 * @method timerCounter
-	 * @return {[type]}     [description]
-	 */
+	* timer
+	* @method timerCounter
+	* @return {[type]}     [description]
+	*/
 	function timerCounter(){
 		if(gameIsStarted){
 			timer++;
@@ -423,25 +420,25 @@ var gameData = new Array();
 	}
 
 	/**
-	 * [openlevelsBox description]
-	 * @method openlevelsBox
-	 * @return {[type]}      [description]
-	 */
+	* [openlevelsBox description]
+	* @method openlevelsBox
+	* @return {[type]}      [description]
+	*/
 	function openlevelsBox(){//push the big Purple Button
 		if(!powerIsOn){powerToggle();}
-			levelsBoxstatus=1;
-			// createjs.Sound.play('slide');
+		levelsBoxstatus=1;
+		// createjs.Sound.play('slide');
 
-			$('#levelsBox').fadeIn(500);
-			$('#levelsBoxbg').fadeIn(500);
-			centerlevelsbox();
+		$('#levelsBox').fadeIn(500);
+		$('#levelsBoxbg').fadeIn(500);
+		centerlevelsbox();
 	}
 
 	/**
-	 * [hidelevelsBox description]
-	 * @method hidelevelsBox
-	 * @return {[type]}      [description]
-	 */
+	* [hidelevelsBox description]
+	* @method hidelevelsBox
+	* @return {[type]}      [description]
+	*/
 	function hidelevelsBox(){
 		// createjs.Sound.play('slide');
 		levelsBoxstatus=0;
@@ -450,10 +447,10 @@ var gameData = new Array();
 	}
 
 	/**
-	 * [centerlevelsbox description]
-	 * @method centerlevelsbox
-	 * @return {[type]}        [description]
-	 */
+	* [centerlevelsbox description]
+	* @method centerlevelsbox
+	* @return {[type]}        [description]
+	*/
 	function centerlevelsbox(){
 		$('#levelsBox').css('left',($(window).width()/2) - ($('#levelsBox').outerWidth()/2));
 		$('#levelsBox').css('width', winwidth / 1.5);
@@ -465,14 +462,14 @@ var gameData = new Array();
 	//Help Level Info
 	var helpLevelInfo=[];
 	helpLevelInfo[0]=
-					"<p class="+'taps'+">This level can be solved  in 1 tap.</p>"+
-					"<p>Tap the center of the plus sign, that's it!</p>"+
-					"<p>Can you see how the adjacent lights are switched OFF too?</p>";
+	"<p class="+'taps'+">This level can be solved  in 1 tap.</p>"+
+	"<p>Tap the center of the plus sign, that's it!</p>"+
+	"<p>Can you see how the adjacent lights are switched OFF too?</p>";
 	helpLevelInfo[1]=
-					"<p class="+'taps'+">This level can be solved in 2 taps.</p>"+
-					"<p>Tap the center of the half plus signs, that's it!</p>"+
-					"<p>Notice this level is almost like level 1 but that same plus sign is now on the top and bottom.</p>"+
-					"<p>Can you see how the adjacent lights aren't always on the game board?</p>";
+	"<p class="+'taps'+">This level can be solved in 2 taps.</p>"+
+	"<p>Tap the center of the half plus signs, that's it!</p>"+
+	"<p>Notice this level is almost like level 1 but that same plus sign is now on the top and bottom.</p>"+
+	"<p>Can you see how the adjacent lights aren't always on the game board?</p>";
 	helpLevelInfo[2]="<p>Solve this level in 4 taps. This level is just like the previous level with 2 more plus signs</p><p>Can you see pattern starting to take shape?</p>";
 	helpLevelInfo[3]="<p>Solve this level in 4 taps. Now all the plus signs are in the corners. Just continue tapping the center of the plus signs.</p><p>Can you see the basic patterns yet?</p>";
 	helpLevelInfo[4]="<p>Solve this level in 4 taps. This level is introduces a new concept, now the lights are affecting eachother in different ways.</p>";
@@ -502,16 +499,16 @@ var gameData = new Array();
 
 	function openhelpBox(){
 		if (!powerIsOn){powerToggle();}
-			// createjs.Sound.play('slide');
-			$('#helpBox').fadeIn(500);
-			$('#helpBoxbg').fadeIn(500);
-			if(!gameIsStarted){
-				//no scroll
-			}else{
+		// createjs.Sound.play('slide');
+		$('#helpBox').fadeIn(500);
+		$('#helpBoxbg').fadeIn(500);
+		if(!gameIsStarted){
+			//no scroll
+		}else{
 			$('#helpBox').scrollTo( '#levelHelp'+(curLevel+1), 1000 );
-			}
-			//$('#content').html('test');
-			centerhelpbox();
+		}
+		//$('#content').html('test');
+		centerhelpbox();
 	}
 
 	function hidehelpBox(){
@@ -564,11 +561,11 @@ var gameData = new Array();
 	levels[numLevels+4]=[];//=30 - X RDM
 
 	/**
-	 * level generator
-	 * @method levelGenerator
-	 * @param  {[type]}       lvl [description]
-	 * @return {[type]}           [description]
-	 */
+	* level generator
+	* @method levelGenerator
+	* @param  {[type]}       lvl [description]
+	* @return {[type]}           [description]
+	*/
 	function levelGenerator(lvl){
 		$('#lvlgenBox p#lvlnumber').html(lvl+1);//populate display with number of next level
 		if(!resetButtonClicked){
@@ -602,10 +599,10 @@ var gameData = new Array();
 	}
 
 	/**
-	 * [RDMlevelGenerator description]
-	 * @method RDMlevelGenerator
-	 * @param  {[type]}          lvl [description]
-	 */
+	* [RDMlevelGenerator description]
+	* @method RDMlevelGenerator
+	* @param  {[type]}          lvl [description]
+	*/
 	function RDMlevelGenerator(lvl){
 		if(resetButtonClicked){
 			animatelvlgenBox(); // flash current level
@@ -631,18 +628,18 @@ var gameData = new Array();
 		var timeDelay = 100;//speed of random generation for looping tapLight
 		for (i = 0; i < rdmClicks; i++) {//toggle a random cell for ever number of random clicks
 			setTimeout(function(){//this function slows down the random generation so the user can almost see its creation
-			var rdmCell = 'cell' + (Math.floor(Math.random()*5)) + (Math.floor(Math.random()*5)) ;//choose a random light to toggle cell00-cell44
-			levels[lvl].push(rdmCell);//push the randon light info(cellXX) to level storage variable for regeneration
-			var newObject= document.getElementById(rdmCell);//create new object =to rdmCell to send to tapLight function
+				var rdmCell = 'cell' + (Math.floor(Math.random()*5)) + (Math.floor(Math.random()*5)) ;//choose a random light to toggle cell00-cell44
+				levels[lvl].push(rdmCell);//push the randon light info(cellXX) to level storage variable for regeneration
+				var newObject= document.getElementById(rdmCell);//create new object =to rdmCell to send to tapLight function
 
-			gameIsStarted = true; // set gameIsStarted to 1 to enable tapLight to run [or first tapLight will be skipped]
+				gameIsStarted = true; // set gameIsStarted to 1 to enable tapLight to run [or first tapLight will be skipped]
 
-	      	tapLight(newObject);//run tapLight
-			// gameIsStarted = false;
-			resetClicks();
-	      	},timeDelay);//slow down the rdm generation so each clicks happens XXX milliseconds apart
-	      	timeDelay+=100;//speed increments - same as timeDelay original var
-	   	}
+				tapLight(newObject);//run tapLight
+				// gameIsStarted = false;
+				resetClicks();
+			},timeDelay);//slow down the rdm generation so each clicks happens XXX milliseconds apart
+			timeDelay+=100;//speed increments - same as timeDelay original var
+		}
 		if(1==levelsBoxstatus){
 			hidelevelsBox();
 		}
@@ -652,10 +649,10 @@ var gameData = new Array();
 	}
 
 	/**
-	 * Animate Next Level Number
-	 * @method animatelvlgenBox
-	 * @return {[type]}         [description]
-	 */
+	* Animate Next Level Number
+	* @method animatelvlgenBox
+	* @return {[type]}         [description]
+	*/
 	function animatelvlgenBox(){
 		$('#lvlgenBox').css('display','block');//turn the display on(still opacity=0)
 		$('#lvlgenBox').animate({//animate
@@ -665,6 +662,5 @@ var gameData = new Array();
 			$('#lvlgenBox').fadeOut();//fade out the number
 		});
 	}
-
-
+	
 })();
