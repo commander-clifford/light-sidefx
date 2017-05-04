@@ -1,47 +1,100 @@
-//GLOBAL VARIABLES
-	var gridSize = 5;/*gridsize will set game board in 1:1 ratio (5 is default and minimum) using a for loop in the HTML
-						changes to gridsize will disrupt current Style - New Layouts need to be added for larger gridsizes
-						larger layouts could be generated based on gridsize variable
-						changes to the gridsize will disrupt current pre-built levels*/
+(function() {
 
-	var powerIsOn = false; // set power toggle position
-	var startOn = false; // set start toggle position
+/**
+ * gridsize will set game board in 1:1 ratio (5 is default and minimum)
+ * using a for loop in the HTML changes to gridsize will disrupt current Style
+ * - New Layouts need to be added for larger gridsizes larger layouts could be generated based on gridsize variable
+ * changes to the gridsize will disrupt current pre-built levels
+ * @type {Number}
+ */
+var gridSize = 5;
 
+/**
+ * boolean for power state
+ * @type {Boolean}
+ */
+var powerIsOn = false;
 
-	var didReset=0;//senses RESET button position
-	var resetbuttonChecked=0;//if reset was called from reset button-
-								//(reset happens from power OFF and STOP as well).
-								//Reset via reset will reset current level, otherwise reset will clear the board with OFF and STOP
-	var timer = 0;//this is the timer var, used for the game timer
-	var numClicks = 0;//tracks number of user clicks for score keeping and the display
-	var numLevels = 26;//how many levels are there? this help var generates the levels
-	var curLevel=0;//level indicator
-	var selectORdisplay=0;//select=0/display=1
+/**
+ * boolean for start button state
+ * @type {Boolean}
+ */
+var gameIsStarted = false;
 
-	var levelsBoxstatus=0;
+/**
+ * did user confirm reset
+ * @type {Boolean}
+ */
+var resetIsConfirm = false;
 
-	/*DELETEgamedata is a new array - not sure what this will do
-	//I'm not sure if this is used?
-	var gameData = new Array();*/
+/**
+ * if reset was called from reset button
+ * reset happens from power OFF and STOP as well
+ * Reset via reset will reset current level
+ * otherwise reset will clear the board with OFF and STOP
+ * @type {Boolean}
+ */
+var resetButtonClicked = false;
 
-//SOUND REGISTER
-	// createjs.Sound.registerSound("audio/beep-high.mp3", "beepHigh", true);
-	// createjs.Sound.registerSound("audio/beep-low.mp3", "beepLow", true);
-	// createjs.Sound.registerSound("audio/beep-doubleHigh.mp3", "beepdoubleHigh", true);
-	// createjs.Sound.registerSound("audio/beep-doubleHigh2.mp3", "beepdoubleHigh2", true);
-	// createjs.Sound.registerSound("audio/beep-doubleLow.mp3", "beepdoubleLow", true);
-	// createjs.Sound.registerSound("audio/beep-error.mp3", "beepError", true);
-	// createjs.Sound.registerSound("audio/slide.mp3", "slide", true);
-	// createjs.Sound.registerSound("audio/swoop.mp3", "swoop", true);
+/**
+ * time counter
+ * @type {Number}
+ */
+var timer = 0;
 
-	$('#select').on('click',function(){ openlevelsBox(); });//bind the Select button to the Select Level screen
-	$('#levelsBoxbg').on('click',function(){ hidelevelsBox(); });//bind select levels bg to hide levels box
-	$('#help').on('click',function(){ openhelpBox(); });//bind the HELP button to the help screen
-	$('#helpBoxbg').on('click',function(){ hidehelpBox(); });//bind help screen bg to hide help box
+/**
+ * tracks number of user clicks for score keeping and the display
+ * @type {Number}
+ */
+var numClicks = 0;
 
-	$(document).ready(function(){//run this when the page is done loading
-		fitui();//run fitui function
-	});//end doc ready
+/**
+ * how many levels are there?
+ * @todo this could be generated from the length of the levels object
+ * @type {Number}
+ */
+var numLevels = 26;
+
+/**
+ * level indicator
+ * @type {Number}
+ */
+var curLevel=0;
+
+/**
+ * display toggle
+ * @type {Number}
+ */
+var selectORdisplay=0;
+
+/**
+ * [levelsBoxstatus description]
+ * @type {Number}
+ */
+var levelsBoxstatus=0;
+
+/**
+ * [gameData description]
+ * @type {Array}
+ */
+var gameData = new Array();
+
+/**
+ * register soundjs
+ * @todo add sounds back to interaction
+ */
+// createjs.Sound.registerSound("audio/beep-high.mp3", "beepHigh", true);
+// createjs.Sound.registerSound("audio/beep-low.mp3", "beepLow", true);
+// createjs.Sound.registerSound("audio/beep-doubleHigh.mp3", "beepdoubleHigh", true);
+// createjs.Sound.registerSound("audio/beep-doubleHigh2.mp3", "beepdoubleHigh2", true);
+// createjs.Sound.registerSound("audio/beep-doubleLow.mp3", "beepdoubleLow", true);
+// createjs.Sound.registerSound("audio/beep-error.mp3", "beepError", true);
+// createjs.Sound.registerSound("audio/slide.mp3", "slide", true);
+// createjs.Sound.registerSound("audio/swoop.mp3", "swoop", true);
+
+	$(document).ready(function(){
+		fitui();
+	});
 
 	$(window).resize(function(){//run this on window resize
 		fitui();//fit UI to screen size everytime the window is resized
@@ -97,27 +150,27 @@
 			$('#power .Ybutton').css('background-color',"#FFEA00");//set POWER button to YELLO(OFF)
 			//=====if POWER is switched OFF during game ask first=====//
 			if($('.iLight').length >= 1){//if there are any lights ON, do this...
-				resetGame();//run resetGame(ask player "are you are sure?"and set didReset to 1(yes) or 0(no))
-				if(1==didReset){//if player did Resest the game(1(yes))
+				getResetConfirm(); // run getResetConfirm
+				if(resetIsConfirm){ // if player confirm is true
 					//Play restart sound
-					if(startOn){//if START then STOP
+					if(gameIsStarted){//if START then STOP
 						$('#start p').html('Start');//set STOP to START
 						$('#start .Ybutton').css('background-color',"#FFEA00");//change Start button to YELLOW
 						$('.iLight').removeClass('iLight').addClass('oLight');//turn all lights off(set all lights to oLight)
 
-						startOn = false;
+						gameIsStarted = false;
 					}
 					if(1==selectORdisplay){//if display is up
 						movetoSelect();//move the select button into place
 					}
-					didReset=0;//set didReset back to 0, for next time this runs
+					resetIsConfirm = false;//set resetIsConfirm back to 0, for next time this runs
 					powerIsOn = false; // set POWER OFF
 					curLevel=0;//reset curLevel
 				}
 			}else{//if there are NO lights ON
 				powerIsOn = false; // set POWER OFF
 
-				startOn = false;
+				gameIsStarted = false;
 				curLevel=0;//reset curLevel
 				if(1==selectORdisplay){//if display is up
 					movetoSelect();//move the select button into place
@@ -137,10 +190,10 @@
 	function startStop(){
 		if(!powerIsOn){ powerToggle(); } // autoOn if the power is OFF then toggle power ON
 		if(powerIsOn){ // when the Power is ON...
-		didReset=0;
+		resetIsConfirm = false;
 			// createjs.Sound.play('beepdoubleHigh');//play sound
-			if (!startOn){ //if stop, set START
-				startOn = true;
+			if (!gameIsStarted){ //if stop, set START
+				gameIsStarted = true;
 				$('#start p').html('Stop');//change START to STOP
 				$('#start .Ybutton').css('background-color',"#554996");//change button to PURPLE
 				setTimeout(timerCounter, 1000);//start timer counter after 1 sec
@@ -152,9 +205,9 @@
 					movetoDisplay();//slide the display into place(==1)
 				}
 			}else{//if start, set STOP...
-				resetGame();//ask user if they are sure
-				if(1 == didReset){ //if user is SURE
-					startOn = false;
+				getResetConfirm();//ask user if they are sure
+				if(resetIsConfirm){ // if reset confirm is true
+					gameIsStarted = false;
 					$('.iLight').removeClass('iLight').addClass('oLight');//turn all lights off(set all lights to oLight)
 					resetTimer();//reset timer counter and display
 					$('#start p').html('Start');//set STOP to START
@@ -170,7 +223,7 @@
 	function tapLight(obj){
 		// createjs.Sound.play('beepHigh');
 		if(!powerIsOn){powerToggle();}//if the Power is OFF then turn it ON
-		if(!startOn){//if the game is STOP
+		if(!gameIsStarted){//if the game is STOP
 			if(curLevel>0){//AND if lights are OFF
 				tapped=1;
 				startStop();//run Start of startStop
@@ -190,7 +243,7 @@
 	    $('#cell' + row + (col+1)).attr('class',($('#cell' + row + (col+1)).attr('class') == 'oLight') ? 'iLight' : 'oLight');//toggle the light of the cell to the right of the clicked cell (OBJ.id row col+1)
 	    $('#cell' + row + (col-1)).attr('class',($('#cell' + row + (col-1)).attr('class') == 'oLight') ? 'iLight' : 'oLight');//toggle the light of the cell to the left of the clicked cell (OBJ.id row col-1)
 		//checkWin - if the game is START and all lights are OFF - Player Wins Level
-		if(startOn){//if the game is START
+		if(gameIsStarted){//if the game is START
 		    if($('.iLight').length >= 1){//AND if 1 or more lights are on - no win yet
 				//no win, lights still on
 			}else{ //AND if 0 lights are ON then Player Wins level
@@ -227,27 +280,25 @@
 		},1000);
 	}
 
-	//RESET BUTTON
-	//if the game is already reset, make the reset button call new function
-	//the new function will bring the select button back on screen
+	/**
+	 * reset function
+	 * if the game is already reset, make the reset button call new function
+	 * the new function will bring the select button back on screen
+	 * @method resetButton
+	 */
 	function resetButton(){
-		if(!powerIsOn){//if Power is OFF...
-			powerToggle();//run Power Toggle to set Power ON
-		}
-		//else if(powerIsOn){//if the Power is already ON...
-			if(startOn){//if the game is START do this...
+		if(powerIsOn){
+			if(gameIsStarted){
 				// createjs.Sound.play('beepdoubleHigh');
-				resetbuttonChecked=1;//tell clearBoard to Reset Level NOT clearAll
-				resetGame();//run reset game function (ask user id SURE?)
-				if(0==didReset){//if didReset is 0 do this...
-					//cancel
-				}else if(1==didReset){//if user is sure true(OK)
+				resetButtonClicked = true; //tell clearBoard to Reset Level NOT clearAll
+				getResetConfirm();
+				if(resetIsConfirm){
 					clearBoard();
 					$('#start p').html('Start');//change STOP to START
 					$('#start .Ybutton').css('background-color',"#FFEA00");	//change the color of the purple button to YELLOW
-					startOn = false;
+					gameIsStarted = false;
 				}
-			}else if(!startOn){//if the game is STOP do this...
+			} else {//if the game is STOP do this...
 				$('.iLight').removeClass('iLight').addClass('oLight');//turn all lights off(set all lights to oLight)
 				// createjs.Sound.play('beepdoubleLow');
 				if(0==selectORdisplay){
@@ -256,30 +307,30 @@
 					movetoSelect();//slide the select button onscreen
 
 					//clearboard???double reset leaves level behind
-					//didReset=0;//set didreset to 0
-					//resetbuttonChecked=0;
+					//resetIsConfirm = false; //set didreset to false
+					//resetButtonClicked = false;
 				}
 
 			}
 
+		}
+		else {
+			alert("Nothing to reset\n\nPower is not ON");
+		}
 
 	}
 
 	//RESET GAME - make sure the user wants to clear thier current progress
-	function resetGame(){
-		//if(startOn){
+	function getResetConfirm(){
+		//if(gameIsStarted){
 			var sure=confirm('Are you sure? This will clear your Progress!');
-			if(true==sure){//if hit OK
-				//set didReset to 1
-				didReset=1;
-				//clear the gameboard(either clear board or reset level(this happens in the clearBoard func))
-
-			}else{//if hit CANCEL...
-				//set didReset to 0
-				didReset=0;
+			if(true==sure){
+				resetIsConfirm = true;
+			}else{
+				resetIsConfirm = false;
 			}
-		//} else if(!startOn){
-			//do nothing
+		//} else if(!gameIsStarted){
+
 		//}
 	}
 
@@ -297,15 +348,15 @@
 
 	//CLEAR or REGEN GAMEOARD
 	function clearBoard(){
-		startOn = false;
+		gameIsStarted = false;
 		resetClicks();//set clicks to 0 and disply
 		resetTimer();//set timer to 0 and display
-		if(1==resetbuttonChecked){
+		if(resetButtonClicked){
 			levelGenerator(curLevel);//reset the current level
-		}else /*if(0==resetbuttonChecked)*/{
+		} else {
 			$('.iLight').removeClass('iLight').addClass('oLight');//turn all lights off(set all lights to oLight)
 		}
-		resetbuttonChecked=0;
+		resetButtonClicked = false;
 	}
 
 	//SELECT Screen
@@ -322,7 +373,7 @@
 		},500,function(){
 			//when animation complete
 		});
-		resetbuttonChecked=0;
+		resetButtonClicked = false;
 		selectORdisplay=0;
 	}
 
@@ -354,7 +405,7 @@
 	 * @return {[type]}     [description]
 	 */
 	function timerCounter(){
-		if(startOn){
+		if(gameIsStarted){
 			timer++;
 			var seconds = timer %60;
 			if(seconds<10){seconds = '0'+seconds;}
@@ -454,7 +505,7 @@
 			// createjs.Sound.play('slide');
 			$('#helpBox').fadeIn(500);
 			$('#helpBoxbg').fadeIn(500);
-			if(!startOn){
+			if(!gameIsStarted){
 				//no scroll
 			}else{
 			$('#helpBox').scrollTo( '#levelHelp'+(curLevel+1), 1000 );
@@ -520,11 +571,11 @@
 	 */
 	function levelGenerator(lvl){
 		$('#lvlgenBox p#lvlnumber').html(lvl+1);//populate display with number of next level
-		if(0==resetbuttonChecked){
+		if(!resetButtonClicked){
 			animatelvlgenBox();
 		}
 		if(lvl>=(numLevels+1)){//RDM Levels Re-Generator
-			startOn = true;
+			gameIsStarted = true;
 			$('.iLight').removeClass('iLight').addClass('oLight');//turn all lights off(set all lights to oLight)
 			for(var i=0; i<levels[lvl].length; i++){
 				var newObject= document.getElementById(levels[lvl][i]);
@@ -556,7 +607,9 @@
 	 * @param  {[type]}          lvl [description]
 	 */
 	function RDMlevelGenerator(lvl){
-		if(1==resetbuttonChecked){animatelvlgenBox();}//flash current level
+		if(resetButtonClicked){
+			animatelvlgenBox(); // flash current level
+		}
 		curLevel=lvl;
 		levels[lvl]=[];//place to store random level array
 		$('.iLight').removeClass('iLight').addClass('oLight');//turn all lights OFF
@@ -582,10 +635,10 @@
 			levels[lvl].push(rdmCell);//push the randon light info(cellXX) to level storage variable for regeneration
 			var newObject= document.getElementById(rdmCell);//create new object =to rdmCell to send to tapLight function
 
-			startOn = true; // set startOn to 1 to enable tapLight to run [or first tapLight will be skipped]
+			gameIsStarted = true; // set gameIsStarted to 1 to enable tapLight to run [or first tapLight will be skipped]
 
 	      	tapLight(newObject);//run tapLight
-			// startOn = false;
+			// gameIsStarted = false;
 			resetClicks();
 	      	},timeDelay);//slow down the rdm generation so each clicks happens XXX milliseconds apart
 	      	timeDelay+=100;//speed increments - same as timeDelay original var
@@ -595,7 +648,7 @@
 		}
 		resetTimer();
 		$('#level .displayOutput').html(lvl);//fill the level indicator with the appropriate level
-		if(!startOn){ startStop(); }
+		if(!gameIsStarted){ startStop(); }
 	}
 
 	/**
@@ -612,3 +665,6 @@
 			$('#lvlgenBox').fadeOut();//fade out the number
 		});
 	}
+
+
+})();
