@@ -48,7 +48,7 @@
 				<!--div id="nlevelRDM" class="levelbox" onclick="RDMlevelGenerator()">RDM<br>Level</div-->
 			</ul>
 		</div><!--end levelsBox-->
-		<div id="levelsBoxbg"></div>
+		<div id="levelsBoxbg" onclick="hidelevelsBox()"></div>
 		<!--////////////// HELP BOX ////////////////-->
 		<div id="helpBox" class="popupBox">
 			<div class="heading">
@@ -72,7 +72,7 @@
 				<!--li id="levelHelpRDM" class="helpbox" onclick="helptopic(numLevels+1)">RDM<br>Level</li-->
 			</ul>
 		</div><!--end helpBox-->
-		<div id="helpBoxbg"></div>
+		<div id="helpBoxbg" onclick="hidehelpBox()"></div>
 		<div id="gameBoard" class="container">
 			<script>
 				//This will build the Game Board using variable gridsize to determine Game Board Size
@@ -111,7 +111,7 @@
 							</div>
 						</div>
 
-						<div class="buttonBox">
+						<div class="buttonBox" onclick="openhelpBox()">
 							<div class="buttonHole">
 									<p>Help</p>
 								<div class="Ybutton" id="help"></div>
@@ -125,7 +125,7 @@
 
 			<!-- PRE GAME Switch to Button -->
 				<div id="preGame">
-					<div class="buttonBox">
+					<div class="buttonBox" onclick="openlevelsBox()">
 						<div class="PbuttonHole">
 								<p>Select</p>
 							<div class="Pbutton" id="select"></div>
