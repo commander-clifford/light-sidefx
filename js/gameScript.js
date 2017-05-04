@@ -97,9 +97,9 @@
 	 * build the gameboard element using 'gridSize'
 	 * @method
 	 * @return {[type]} [description]
-	 * @todo build real elements - not just a string 
+	 * @todo build real elements - not just a string
 	 */
-	var gameBoard = function(){
+	var buildGameBoard = function(){
 		var game = '';
 		for (i = 0; i < gridSize; i++) {
 			game += '<div class="row">\n';
@@ -111,13 +111,50 @@
 		return game;
 	};
 
+	/**
+	 * build the list of levels
+	 * @method
+	 * @return {[type]} [description]
+	 */
+	var buildLevelsList = function(){
+		var list = '';
+		for (i = 0; i < numLevels; i++) {
+			list += ('<li id="nlevel'+(i+1)+'" class="levelbox" onclick="levelGenerator('+i+')" >Level<br><span>'+(i+1)+'</span></li>');
+		}
+		list += ('<li id="nlevel'+(numLevels+1)+'" class="levelbox" onclick="RDMlevelGenerator('+(numLevels+1)+')" >RDM<br><span>2-4</span></li>');
+		list += ('<li id="nlevel'+(numLevels+2)+'" class="levelbox" onclick="RDMlevelGenerator('+(numLevels+2)+')" >RDM<br><span>4-6</span></li>');
+		list += ('<li id="nlevel'+(numLevels+3)+'" class="levelbox" onclick="RDMlevelGenerator('+(numLevels+3)+')" >RDM<br><span>6-8</span></li>');
+		list += ('<li id="nlevel'+(numLevels+4)+'" class="levelbox" onclick="RDMlevelGenerator('+(numLevels+4)+')" >RDM<br><span>5-9</span></li>');
+		return list;
+	};
+
+	/**
+	 * build help docs levels_list
+	 * @method
+	 * @return {[type]} [description]
+	 */
+	var buildHelpList = function(){
+		var list = '';
+		for (i = 0; i < numLevels; i++) {
+			list += ('<li id="levelHelp'+(i+1)+'" class="helpBoxes" onclick="helptopic('+i+')" ><h3>Level '+(i+1)+'</h3><p>'+helpLevelInfo[i]+'</p></li>');
+		}
+		list += ('<li id="levelHelpRDM" class="helpBoxes" onclick="helptopic('+(numLevels+1)+')" ><h3>Level '+(numLevels+1)+'</h3>'+helpLevelInfo[numLevels+1]+'</li>');
+		list += ('<li id="levelHelpRDM" class="helpBoxes" onclick="helptopic('+(numLevels+2)+')" ><h3>Level '+(numLevels+2)+'</h3>'+helpLevelInfo[numLevels+2]+'</li>');
+		list += ('<li id="levelHelpRDM" class="helpBoxes" onclick="helptopic('+(numLevels+3)+')" ><h3>Level '+(numLevels+3)+'</h3>'+helpLevelInfo[numLevels+3]+'</li>');
+		list += ('<li id="levelHelpRDM" class="helpBoxes" onclick="helptopic('+(numLevels+4)+')" ><h3>Level '+(numLevels+4)+'</h3>'+helpLevelInfo[numLevels+4]+'</li>');
+		return list;
+	};
+
 
 
 	$(document).ready(function(){
 
-		$('#gameBoard').prepend( gameBoard() );
+		$('#gameBoard').prepend(buildGameBoard());
+		$('#levels_list').prepend(buildLevelsList());
+		$('#helpdocs_list').prepend(buildHelpList());
 
 		fitui();
+
 	});
 
 	$(window).resize(function(){//run this on window resize

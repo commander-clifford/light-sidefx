@@ -18,13 +18,13 @@
 </head>
 
 <body>
-	<!--div id="fitUI" onclick="fitui()" style=" background-color: rgba(0,0,0,0.35); position:fixed; top:50px; left:50px; height:50px; width:50px;">fitUI</div-->
 	<div id="wrapper" class="wrapper">
+
 		<div id="lvlgenBox" class="lvlgenBox">
 			<p>LEVEL</p>
 			<p id="lvlnumber">1</p>
 		</div>
-		<!--////////////// CHOOSE A LEVEL BOX ////////////////-->
+
 		<div id="levelsBox" class="popupBox">
 			<div class="heading">
 				<span class="headingback"></span>
@@ -33,45 +33,21 @@
 					<p class="intro">Choose a Level</p>
 				</div>
 			</div>
-			<ul>
-				<!-- move this into gameScript -->
-				<script type="text/javascript">
-				for (i = 0; i < numLevels; i++) {
-					document.write('<li id="nlevel'+(i+1)+'" class="levelbox" onclick="levelGenerator('+i+')" >Level<br><span>'+(i+1)+'</span></li>');
-				}
-				document.write('<li id="nlevel'+(numLevels+1)+'" class="levelbox" onclick="RDMlevelGenerator('+(numLevels+1)+')" >RDM<br><span>2-4</span></li>');
-				document.write('<li id="nlevel'+(numLevels+2)+'" class="levelbox" onclick="RDMlevelGenerator('+(numLevels+2)+')" >RDM<br><span>4-6</span></li>');
-				document.write('<li id="nlevel'+(numLevels+3)+'" class="levelbox" onclick="RDMlevelGenerator('+(numLevels+3)+')" >RDM<br><span>6-8</span></li>');
-				document.write('<li id="nlevel'+(numLevels+4)+'" class="levelbox" onclick="RDMlevelGenerator('+(numLevels+4)+')" >RDM<br><span>5-9</span></li>');
-				</script>
-				<li style="clear: both;"></li>
-				<!--div id="nlevelRDM" class="levelbox" onclick="RDMlevelGenerator()">RDM<br>Level</div-->
-			</ul>
-		</div><!--end levelsBox-->
+			<ul id="levels_list"></ul>
+		</div>
 		<div id="levelsBoxbg" onclick="hidelevelsBox()"></div>
-		<!--////////////// HELP BOX ////////////////-->
+
 		<div id="helpBox" class="popupBox">
 			<div class="heading">
 				<span class="headingback"></span>
 				<h1>light SideFX</h1>
 				<div class="headingbottom">
-					<p class="intro">lightSideFX is an interactive game based on the mathmatical adjacent relationships between lights in a square grid.</p>
+					<p class="intro">lightSideFX is an interactive game based on the mathematical adjacent relationships between lights in a square grid.</p>
 				</div>
 			</div>
 
-			<ul>
-				<script type="text/javascript">
-				for (i = 0; i < numLevels; i++) {
-					document.write('<li id="levelHelp'+(i+1)+'" class="helpBoxes" onclick="helptopic('+i+')" ><h3>Level '+(i+1)+'</h3><p>'+helpLevelInfo[i]+'</p></li>');
-				}
-				document.write('<li id="levelHelpRDM" class="helpBoxes" onclick="helptopic('+(numLevels+1)+')" ><h3>Level '+(numLevels+1)+'</h3>'+helpLevelInfo[numLevels+1]+'</li>');
-				document.write('<li id="levelHelpRDM" class="helpBoxes" onclick="helptopic('+(numLevels+2)+')" ><h3>Level '+(numLevels+2)+'</h3>'+helpLevelInfo[numLevels+2]+'</li>');
-				document.write('<li id="levelHelpRDM" class="helpBoxes" onclick="helptopic('+(numLevels+3)+')" ><h3>Level '+(numLevels+3)+'</h3>'+helpLevelInfo[numLevels+3]+'</li>');
-				document.write('<li id="levelHelpRDM" class="helpBoxes" onclick="helptopic('+(numLevels+4)+')" ><h3>Level '+(numLevels+4)+'</h3>'+helpLevelInfo[numLevels+4]+'</li>');
-				</script>
-				<!--li id="levelHelpRDM" class="helpbox" onclick="helptopic(numLevels+1)">RDM<br>Level</li-->
-			</ul>
-		</div><!--end helpBox-->
+			<ul id="helpdocs_list"></ul>
+		</div>
 		<div id="helpBoxbg" onclick="hidehelpBox()"></div>
 
 		<div id="gameBoard" class="container">
@@ -110,9 +86,9 @@
 							</div>
 						</div>
 
-					</div><!--buttons-->
-				</div><!--controls-->
-			</div><!--end rightcol-->
+					</div>
+				</div>
+			</div>
 			<div id="leftcol">
 
 				<!-- PRE GAME Switch to Button -->
