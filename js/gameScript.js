@@ -20,22 +20,22 @@
 	var gameData = new Array();*/
 
 //SOUND REGISTER
-	createjs.Sound.registerSound("beep-high.mp3", "beepHigh", true);
-	createjs.Sound.registerSound("beep-low.mp3", "beepLow", true);
-	createjs.Sound.registerSound("beep-doubleHigh.mp3", "beepdoubleHigh", true);
-	createjs.Sound.registerSound("beep-doubleHigh2.mp3", "beepdoubleHigh2", true);
-	createjs.Sound.registerSound("beep-doubleLow.mp3", "beepdoubleLow", true);
-	createjs.Sound.registerSound("beep-error.mp3", "beepError", true);
-	createjs.Sound.registerSound("slide.mp3", "slide", true);
-	createjs.Sound.registerSound("swoop.mp3", "swoop", true);	
+	createjs.Sound.registerSound("audio/beep-high.mp3", "beepHigh", true);
+	createjs.Sound.registerSound("audio/beep-low.mp3", "beepLow", true);
+	createjs.Sound.registerSound("audio/beep-doubleHigh.mp3", "beepdoubleHigh", true);
+	createjs.Sound.registerSound("audio/beep-doubleHigh2.mp3", "beepdoubleHigh2", true);
+	createjs.Sound.registerSound("audio/beep-doubleLow.mp3", "beepdoubleLow", true);
+	createjs.Sound.registerSound("audio/beep-error.mp3", "beepError", true);
+	createjs.Sound.registerSound("audio/slide.mp3", "slide", true);
+	createjs.Sound.registerSound("audio/swoop.mp3", "swoop", true);	
 
 //DOCUMENT READY
 	$(document).ready(function(){//run this when the page is done loading
 		fitui();//run fitui function
 	//BIND some DIVs to the respective FUNCTIONS
 		$('#power').bind('click', function(){powerToggle();});//bind the POWER BUTTON to the powerToggle function
-		$('#reset').bind('click', function(){resetButton();});//bind the RESET BUTTON to the reset function 
-		$('#start').bind('click', function(){StartStop();});//bind the START BUTTON to the StartStop function 
+		$('#reset').bind('click', function(){resetButton();});//bind the RESET BUTTON to the reset function
+		$('#start').bind('click', function(){StartStop();});//bind the START BUTTON to the StartStop function
 		$('#select').bind('click',function(){openlevelsBox();});//bind the Select button to the Select Level screen
 		$('#levelsBoxbg').bind('click',function(){hidelevelsBox();});//bind select levels bg to hide levels box
 		$('#help').bind('click',function(){openhelpBox();});//bind the HELP button to the help screen
