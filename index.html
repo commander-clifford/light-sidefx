@@ -73,19 +73,11 @@
 			</ul>
 		</div><!--end helpBox-->
 		<div id="helpBoxbg" onclick="hidehelpBox()"></div>
+
 		<div id="gameBoard" class="container">
-			<script>
-			//This will build the Game Board using variable gridsize to determine Game Board Size
-			for (i = 0; i < gridSize; i++) {
-				document.write('<div class="row">\n');
-				for (j = 0; j < gridSize; j++) {
-					document.write('<div class="oLight" id="cell' + i + j + '" onclick="tapLight(this)"></div>\n');
-				}
-				document.write("</div>\n");
-			}
-			</script>
 			<div style="clear:both;"></div>
-		</div><!--gameBoard-->
+		</div>
+
 		<div id ="gameInput" class="container">
 			<div id="rightcol">
 				<div id="controls">
@@ -93,7 +85,7 @@
 						<div id="power" onclick="powerToggle()" class="buttonBox">
 							<div id="powerLight"></div>
 							<div class="buttonHole">
-								<p>Power!!</p>
+								<p>Power</p>
 								<div class="Ybutton"></div>
 							</div>
 						</div>

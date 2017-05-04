@@ -1,4 +1,4 @@
-(function() {
+// (function() {
 
 	/**
 	* gridsize will set game board in 1:1 ratio (5 is default and minimum)
@@ -91,8 +91,32 @@
 	// createjs.Sound.registerSound("audio/beep-error.mp3", "beepError", true);
 	// createjs.Sound.registerSound("audio/slide.mp3", "slide", true);
 	// createjs.Sound.registerSound("audio/swoop.mp3", "swoop", true);
+	//
+
+	/**
+	 * build the gameboard element using 'gridSize'
+	 * @method
+	 * @return {[type]} [description]
+	 * @todo build real elements - not just a string 
+	 */
+	var gameBoard = function(){
+		var game = '';
+		for (i = 0; i < gridSize; i++) {
+			game += '<div class="row">\n';
+			for (j = 0; j < gridSize; j++) {
+				game += '\t<div class="oLight" id="cell' + i + j + '" onclick="tapLight(this)"></div>\n';
+			}
+			game += '</div>\n';
+		}
+		return game;
+	};
+
+
 
 	$(document).ready(function(){
+
+		$('#gameBoard').prepend( gameBoard() );
+
 		fitui();
 	});
 
@@ -662,5 +686,5 @@
 			$('#lvlgenBox').fadeOut();//fade out the number
 		});
 	}
-	
-})();
+
+// })();
