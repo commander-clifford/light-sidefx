@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>light SideFX</title>
+
+<title>Lights Out</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1 user-scalable=no">
-<script language="javascript" type="text/javascript" src="jquery.js"></script>
 
-<script language="javascript" type="text/javascript" src="scrollto.js"></script>
-<script language="javascript" type="text/javascript" src="soundjs-0.4.1.min.js"></script>
 <link rel="stylesheet" type="text/css" href="gameStyle.css">
-<script language="javascript" type="text/javascript" src="gameScript.js"></script>
+
+<script src="js/vendor/modernizr-2.8.3.min.js"></script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+
+<script language="javascript" type="text/javascript" src="js/gameScript.js"></script>
+
 </head>
 
 <body>
@@ -29,10 +34,11 @@
 			</div>
 			</div>
 			<ul>
+				<!-- move this into gameScript -->
 				<script type="text/javascript">
 					for (i = 0; i < numLevels; i++) {
 				   	document.write('<li id="nlevel'+(i+1)+'" class="levelbox" onclick="levelGenerator('+i+')" >Level<br><span>'+(i+1)+'</span></li>');
-				   	}	
+				   	}
 				   	document.write('<li id="nlevel'+(numLevels+1)+'" class="levelbox" onclick="RDMlevelGenerator('+(numLevels+1)+')" >RDM<br><span>2-4</span></li>');
 				   	document.write('<li id="nlevel'+(numLevels+2)+'" class="levelbox" onclick="RDMlevelGenerator('+(numLevels+2)+')" >RDM<br><span>4-6</span></li>');
 				   	document.write('<li id="nlevel'+(numLevels+3)+'" class="levelbox" onclick="RDMlevelGenerator('+(numLevels+3)+')" >RDM<br><span>6-8</span></li>');
@@ -52,12 +58,12 @@
 				<p class="intro">lightSideFX is an interactive game based on the mathmatical adjacent relationships between lights in a square grid.</p>
 			</div>
 			</div>
-			
+
 			<ul>
 				<script type="text/javascript">
 					for (i = 0; i < numLevels; i++) {
 				   	document.write('<li id="levelHelp'+(i+1)+'" class="helpBoxes" onclick="helptopic('+i+')" ><h3>Level '+(i+1)+'</h3><p>'+helpLevelInfo[i]+'</p></li>');
-				   	}	
+				   	}
 				   	document.write('<li id="levelHelpRDM" class="helpBoxes" onclick="helptopic('+(numLevels+1)+')" ><h3>Level '+(numLevels+1)+'</h3>'+helpLevelInfo[numLevels+1]+'</li>');
 				   	document.write('<li id="levelHelpRDM" class="helpBoxes" onclick="helptopic('+(numLevels+2)+')" ><h3>Level '+(numLevels+2)+'</h3>'+helpLevelInfo[numLevels+2]+'</li>');
 				   	document.write('<li id="levelHelpRDM" class="helpBoxes" onclick="helptopic('+(numLevels+3)+')" ><h3>Level '+(numLevels+3)+'</h3>'+helpLevelInfo[numLevels+3]+'</li>');
@@ -87,7 +93,7 @@
 						<div id="power" class="buttonBox">
 							<div id="powerLight"></div>
 							<div class="buttonHole">
-								<p>Power</p>	
+								<p>Power</p>
 								<div class="Ybutton"></div>
 							</div>
 						</div>
@@ -97,14 +103,14 @@
 								<div class="Ybutton"></div>
 							</div>
 						</div>
-						
+
 						<div class="buttonBox">
 							<div class="buttonHole">
 									<p>Reset</p>
 								<div class="Ybutton" id="reset"></div>
 							</div>
 						</div>
-						
+
 						<div class="buttonBox">
 							<div class="buttonHole">
 									<p>Help</p>
@@ -112,11 +118,11 @@
 							</div>
 						</div>
 
-					</div><!--buttons-->		
+					</div><!--buttons-->
 				</div><!--controls-->
 			</div><!--end rightcol-->
 			<div id="leftcol">
-				
+
 			<!-- PRE GAME Switch to Button -->
 				<div id="preGame">
 					<div class="buttonBox">
@@ -144,19 +150,21 @@
 					</div>
 					<div id="timer" class="displayBox">
 						<p class="displayOutput">0:00</p>
-						<p class="displayName">Timer</p>		
+						<p class="displayName">Timer</p>
 					</div>
-					
+
 				</div>
 			<!-- end #display-->
 
-			
+
 		</div><!--end leftcol-->
 			<!--<div style="clear:both;"></div>-->
 		</div><!--gameInput-->
 	</div><!--wrapper-->
+
+	<script language="javascript" type="text/javascript" src="js/vendor/scrollto.js"></script>
+	<script language="javascript" type="text/javascript" src="js/vendor/soundjs-0.4.1.min.js"></script>
+
 </body>
 
 </html>
-
-		
